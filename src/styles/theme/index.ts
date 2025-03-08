@@ -29,6 +29,14 @@ const theme = {
     md: pxToRem(16),
     lg: pxToRem(20),
   },
+  fontWeight: {
+    light: "300",
+    normal: "400",
+    medium: "500",
+    semibold: "600",
+    bold: "700",
+    extrabold: "800",
+  },
 };
 
 type DefaultTheme = typeof theme;
