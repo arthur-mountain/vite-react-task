@@ -53,4 +53,4 @@ const Popover: React.FC<PopoverProps> = ({ content, children }) => {
   );
 };
 
-export default Popover;
+export { Popover, type PopoverProps };

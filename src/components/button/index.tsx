@@ -19,7 +19,7 @@ const getButtonPadding: StyleFunction<ButtonProps> = (props) => {
   }
 };
 
-export const Button = styled.button<ButtonProps>`
+const Button = styled.button<ButtonProps>`
   background-color: ${(props) => props.theme.color[props.variant || "primary"]};
   color: white;
   border: none;
@@ -32,3 +32,5 @@ export const Button = styled.button<ButtonProps>`
     opacity: 0.9;
   }
 `;
+
+export { Button, type ButtonProps };
