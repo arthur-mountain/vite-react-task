@@ -6,10 +6,6 @@ type ButtonProps = {
   size?: keyof DefaultTheme["fontSize"];
 };
 
-const getButtonColor: StyleFunction<ButtonProps> = (props) => {
-  return props.theme.color[props.variant || "primary"];
-};
-
 const getButtonPadding: StyleFunction<ButtonProps> = (props) => {
   switch (props.size) {
     case "sm":
@@ -24,7 +20,7 @@ const getButtonPadding: StyleFunction<ButtonProps> = (props) => {
 };
 
 export const Button = styled.button<ButtonProps>`
-  background-color: ${getButtonColor};
+  background-color: ${(props) => props.theme.color[props.variant || "primary"]};
   color: white;
   border: none;
   border-radius: ${({ theme }) => theme.borderRadius.md};
