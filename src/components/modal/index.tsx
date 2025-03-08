@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from "react";
+import { type PropsWithChildren, type MouseEventHandler, useRef } from "react";
 import styled from "styled-components";
 import { pxToRem } from "@/utils";
 import { Button } from "../button";
@@ -7,27 +7,34 @@ type ModalProps = PropsWithChildren<{
   isOpen: boolean;
   onClose: () => void;
   disableCloseOnOverlayClick?: boolean;
+  hideOverlay?: boolean;
   maxWidth?: number;
+  unmountOnClose?: boolean;
 }>;
 
-const ModalOverlay = styled.div<{ isOpen: boolean }>`
+const ModalOverlay = styled.div<{
+  $isOpen: ModalProps["isOpen"];
+  $hideOverlay: ModalProps["hideOverlay"];
+}>`
   position: fixed;
   inset: 0;
-  display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
-  background: rgba(0, 0, 0, 0.5);
+  display: ${({ $isOpen }) => ($isOpen ? "flex" : "none")};
+  background: ${({ theme, $hideOverlay }) =>
+    $hideOverlay ? theme.color.transparent : "rgba(0, 0, 0, 0.3)"};
   justify-content: center;
   align-items: center;
   z-index: ${({ theme }) => theme.zIndex.overlay};
 `;
 
-const ModalContent = styled.div<{ maxWidth: ModalProps["maxWidth"] }>`
+const ModalContent = styled.div<{
+  $maxWidth: NonNullable<ModalProps["maxWidth"]>;
+}>`
   position: relative;
   background: ${({ theme }) => theme.color.background};
   border-radius: ${({ theme }) => theme.borderRadius.md};
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  max-width: ${({ maxWidth = 900 }) => pxToRem(maxWidth)};
+  max-width: min(${({ $maxWidth }) => pxToRem($maxWidth)}, 90vw);
   max-height: 90vh;
-  margin: 0 ${({ theme }) => theme.spacing.xl};
 `;
 
 const CloseButton = styled(Button)`
@@ -53,18 +60,30 @@ const Modal = ({
   isOpen,
   onClose,
   children,
+  maxWidth = 900,
   disableCloseOnOverlayClick = false,
-  maxWidth,
+  hideOverlay = false,
+  unmountOnClose = false,
 }: ModalProps) => {
-  const onOverlayClick = () => {
-    if (!disableCloseOnOverlayClick) onClose();
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const onOverlayClick: MouseEventHandler<HTMLDivElement> = (evt) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+    if (evt.target === overlayRef.current && !disableCloseOnOverlayClick) {
+      onClose();
+    }
   };
 
   return (
-    <ModalOverlay isOpen={isOpen} onClick={onOverlayClick}>
-      <ModalContent maxWidth={maxWidth} onClick={(e) => e.stopPropagation()}>
+    <ModalOverlay
+      ref={overlayRef}
+      $isOpen={isOpen}
+      $hideOverlay={hideOverlay}
+      onClick={onOverlayClick}
+    >
+      <ModalContent $maxWidth={maxWidth}>
         <CloseButton onClick={onClose}>&times;</CloseButton>
-        {children}
+        {unmountOnClose ? (isOpen ? children : null) : children}
       </ModalContent>
     </ModalOverlay>
   );

@@ -3,20 +3,20 @@ import type { DefaultTheme } from "@/styles/theme";
 import styled, { type StyleFunction } from "styled-components";
 
 type ButtonProps = ComponentProps<"button"> & {
-  variant?: keyof DefaultTheme["color"] | "text";
-  size?: keyof DefaultTheme["fontSize"];
+  $variant?: keyof DefaultTheme["color"] | "text";
+  $size?: keyof DefaultTheme["fontSize"];
 };
 
-const getButtonPadding: StyleFunction<ButtonProps> = (props) => {
-  switch (props.size) {
+const getButtonPadding: StyleFunction<ButtonProps> = ({ theme, $size }) => {
+  switch ($size) {
     case "sm":
-      return `${props.theme.spacing.sm} ${props.theme.spacing.base}`;
+      return `${theme.spacing.sm} ${theme.spacing.base}`;
     case "md":
-      return `${props.theme.spacing.base} ${props.theme.spacing.md}`;
+      return `${theme.spacing.base} ${theme.spacing.md}`;
     case "lg":
-      return `${props.theme.spacing.md} ${props.theme.spacing.lg}`;
+      return `${theme.spacing.md} ${theme.spacing.lg}`;
     default:
-      return `${props.theme.spacing.base} ${props.theme.spacing.md}`;
+      return `${theme.spacing.base} ${theme.spacing.md}`;
   }
 };
 
@@ -24,22 +24,22 @@ const Button = styled.button<ButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme, variant }) =>
-    variant === "text"
+  background-color: ${({ theme, $variant }) =>
+    $variant === "text"
       ? theme.color.transparent
-      : theme.color[variant || "primary"]};
-  color: ${({ theme, variant }) =>
-    variant === "text" ? theme.color.text : theme.color.white};
+      : theme.color[$variant || "primary"]};
+  color: ${({ theme, $variant }) =>
+    $variant === "text" ? theme.color.text : theme.color.white};
   border: none;
   outline: none;
-  border-radius: ${({ theme, variant }) =>
-    variant === "text" ? theme.borderRadius.auto : theme.borderRadius.md};
+  border-radius: ${({ theme, $variant }) =>
+    $variant === "text" ? theme.borderRadius.auto : theme.borderRadius.md};
   padding: ${getButtonPadding};
   font-size: ${({ theme }) => theme.fontSize.base};
   cursor: pointer;
 
-  ${({ theme, variant }) =>
-    variant === "text"
+  ${({ theme, $variant }) =>
+    $variant === "text"
       ? `
   padding-left: 0;
   padding-right: 0;

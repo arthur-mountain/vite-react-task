@@ -1,8 +1,9 @@
-import { pxToRem } from "@/utils";
-import React, { useState, ReactNode } from "react";
+import { useState, type MouseEventHandler, type ReactNode } from "react";
 import styled from "styled-components";
+import { pxToRem } from "@/utils";
 
 type TabProps = {
+  key: string;
   label: string;
   content: ReactNode;
 };
@@ -35,21 +36,21 @@ const TabList = styled.ul`
   background: none;
 `;
 
-const TabItem = styled.li<{ active: boolean }>`
+const TabItem = styled.li<{ $active: boolean }>`
   padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.lg};
   cursor: pointer;
-  background-color: ${({ theme, active }) =>
-    active ? theme.color.white : theme.color.unselected};
-  color: ${({ theme, active }) =>
-    active ? theme.color.primary : theme.color.text};
+  background-color: ${({ theme, $active }) =>
+    $active ? theme.color.white : theme.color.unselected};
+  color: ${({ theme, $active }) =>
+    $active ? theme.color.primary : theme.color.text};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   font-size: ${({ theme }) => theme.fontSize.base};
   border-radius: ${({ theme }) => theme.borderRadius.sm}
     ${({ theme }) => theme.borderRadius.sm} 0 0;
 
   &:hover {
-    background-color: ${({ theme, active }) =>
-      active ? theme.color.white : theme.color.neutral};
+    background-color: ${({ theme, $active }) =>
+      $active ? theme.color.white : theme.color.neutral};
   }
 `;
 
@@ -84,9 +85,12 @@ const TabContent = styled.div`
 const Tabs = ({ tabs, rightComponents }: TabsProps) => {
   const [activeTab, setActiveTab] = useState(0);
 
-  const handleTabClick = (index: number) => {
-    setActiveTab(index);
-  };
+  const onTabClick: (index: number) => MouseEventHandler<HTMLLIElement> =
+    (index) => (evt) => {
+      evt.preventDefault();
+      evt.stopPropagation();
+      setActiveTab(index);
+    };
 
   return (
     <TabsContainer>
@@ -94,9 +98,9 @@ const Tabs = ({ tabs, rightComponents }: TabsProps) => {
         <TabList>
           {tabs.map((tab, index) => (
             <TabItem
-              key={index}
-              active={activeTab === index}
-              onClick={() => handleTabClick(index)}
+              key={tab.key}
+              $active={activeTab === index}
+              onClick={onTabClick(index)}
             >
               {tab.label}
             </TabItem>

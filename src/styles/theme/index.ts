@@ -2,17 +2,21 @@ import { pxToRem } from "@/utils";
 
 const theme = {
   color: {
-    primary: "#3B82F6", // 藍色（選中的學生框）
-    secondary: "#FACC15", // 黃色（背景點綴）
-    success: "#10B981", // 綠色（+1 分數）
-    danger: "#EF4444", // 紅色（-1 分數）
-    neutral: "#D1D5DB", // 灰色（未選中的學生框）
-    background: "#F3F4F6", // 整體背景顏色
-    text: "#1F2937", // 深色文字
-    white: "#FFFFFF", // 白色
-    black: "#000000", // 黑色
+    auto: "auto",
+    transparent: "transparent",
+    primary: "#3B82F6",
+    secondary: "#FACC15",
+    success: "#10B981",
+    danger: "#EF4444",
+    neutral: "#D1D5DB",
+    background: "#F0F0F0",
+    text: "#1F2937",
+    white: "#FFFFFF",
+    black: "#000000",
+    unselected: "#D3D3D3",
   },
   borderRadius: {
+    auto: "auto",
     sm: pxToRem(4),
     md: pxToRem(8),
     lg: pxToRem(16),
@@ -24,6 +28,8 @@ const theme = {
     md: pxToRem(12),
     lg: pxToRem(16),
     xl: pxToRem(20),
+    "2xl": pxToRem(24),
+    "3xl": pxToRem(28),
   },
   fontSize: {
     sm: pxToRem(12),
@@ -49,8 +55,18 @@ const theme = {
     overlay: 1060,
     max: 9999,
   },
+  gap: {
+    sm: pxToRem(4),
+    base: pxToRem(8),
+    md: pxToRem(12),
+    lg: pxToRem(16),
+    xl: pxToRem(20),
+    "2xl": pxToRem(24),
+    "3xl": pxToRem(32),
+  },
 };
 
 type DefaultTheme = typeof theme;
 
-export { theme, type DefaultTheme };
+export type { DefaultTheme };
+export { theme };
