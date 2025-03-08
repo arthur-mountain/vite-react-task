@@ -31,7 +31,7 @@ const PopoverContent = styled.div<{ isOpen: boolean }>`
   z-index: ${({ theme }) => theme.zIndex.popover};
 `;
 
-const Popover: React.FC<PopoverProps> = ({ content, children }) => {
+const Popover = ({ content, children }: PopoverProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -53,4 +53,5 @@ const Popover: React.FC<PopoverProps> = ({ content, children }) => {
   );
 };
 
-export { Popover, type PopoverProps };
+export type { PopoverProps };
+export { Popover };

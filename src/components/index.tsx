@@ -9,3 +9,6 @@ export * from "./modal";
 
 export type * from "./popover";
 export * from "./popover";
+
+export type * from "./tabs";
+export * from "./tabs";

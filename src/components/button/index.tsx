@@ -1,8 +1,9 @@
+import type { ComponentProps } from "react";
 import type { DefaultTheme } from "@/styles/theme";
 import styled, { type StyleFunction } from "styled-components";
 
-type ButtonProps = {
-  variant?: keyof DefaultTheme["color"];
+type ButtonProps = ComponentProps<"button"> & {
+  variant?: keyof DefaultTheme["color"] | "text";
   size?: keyof DefaultTheme["fontSize"];
 };
 
@@ -20,17 +21,44 @@ const getButtonPadding: StyleFunction<ButtonProps> = (props) => {
 };
 
 const Button = styled.button<ButtonProps>`
-  background-color: ${(props) => props.theme.color[props.variant || "primary"]};
-  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${({ theme, variant }) =>
+    variant === "text"
+      ? theme.color.transparent
+      : theme.color[variant || "primary"]};
+  color: ${({ theme, variant }) =>
+    variant === "text" ? theme.color.text : theme.color.white};
   border: none;
-  border-radius: ${({ theme }) => theme.borderRadius.md};
+  outline: none;
+  border-radius: ${({ theme, variant }) =>
+    variant === "text" ? theme.borderRadius.auto : theme.borderRadius.md};
   padding: ${getButtonPadding};
   font-size: ${({ theme }) => theme.fontSize.base};
   cursor: pointer;
 
-  &:hover {
+  ${({ theme, variant }) =>
+    variant === "text"
+      ? `
+  padding-left: 0;
+  padding-right: 0;
+  &:disabled {
+    color: ${theme.color.neutral};
+    cursor: not-allowed;
+  }
+`
+      : `
+  &:disabled {
+    background-color: ${theme.color.neutral};
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
     opacity: 0.9;
   }
+`};
 `;
 
-export { Button, type ButtonProps };
+export type { ButtonProps };
+export { Button };
