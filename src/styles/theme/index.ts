@@ -31,4 +31,6 @@ const theme = {
   },
 };
 
-export { theme };
+type DefaultTheme = typeof theme;
+
+export { theme, type DefaultTheme };
