@@ -3,8 +3,8 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 type ClassState = {
   status: ApiStatusType;
-  classInfo: ClassesType.ClassResopnseType["classInfo"];
-  students: ClassesType.ClassResopnseType["students"];
+  classInfo: ClassesType.ClassResponseType["classInfo"];
+  students: ClassesType.ClassResponseType["students"];
 };
 
 const initialClassState: ClassState = {
@@ -26,7 +26,7 @@ const classSlice = createSlice({
   reducers: {
     initClass: (
       state,
-      action: PayloadAction<ClassesType.ClassResopnseType | undefined>,
+      action: PayloadAction<ClassesType.ClassResponseType | undefined>,
     ) => {
       if (action.payload) {
         state.status = "success";

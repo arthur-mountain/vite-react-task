@@ -1,5 +1,5 @@
 export type StudentType = { id: string; name: string; isGuest: boolean };
-export type ClassResopnseType = {
+export type ClassResponseType = {
   classInfo: {
     id: string;
     class: string;

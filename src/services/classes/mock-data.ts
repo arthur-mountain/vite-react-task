@@ -1,6 +1,6 @@
-import type { ClassResopnseType } from "./types";
+import type { ClassResponseType } from "./types";
 
-const mockStudents: ClassResopnseType["students"] = [];
+const mockStudents: ClassResponseType["students"] = [];
 
 let isGuestCount = 0;
 const randomNames = [
@@ -28,7 +28,7 @@ for (let i = 0; i < 500; i++) {
   });
 }
 
-const mockData: ClassResopnseType = {
+const mockData: ClassResponseType = {
   classInfo: {
     id: "X58E9647",
     class: "302",
