@@ -1,3 +1,5 @@
+import { pxToRem } from "@/utils";
+
 const theme = {
   colors: {
     primary: "#3B82F6", // 藍色（選中的學生框）
@@ -8,16 +10,16 @@ const theme = {
     background: "#F3F4F6", // 整體背景顏色
     text: "#1F2937", // 深色文字
   },
-  borderRadius: "0.5rem",
+  borderRadius: pxToRem(8),
   spacing: {
-    small: "0.25rem", // 4px
-    medium: "0.5rem", // 8px
-    large: "1rem", // 16px
+    sm: pxToRem(4),
+    md: pxToRem(8),
+    lg: pxToRem(16),
   },
   fontSize: {
-    small: "0.75rem", // 12px
-    medium: "1rem", // 16px
-    large: "1.25rem", // 20px
+    sm: pxToRem(12),
+    md: pxToRem(16),
+    lg: pxToRem(20),
   },
 };
 
