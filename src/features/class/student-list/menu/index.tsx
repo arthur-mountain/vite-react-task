@@ -1,6 +1,6 @@
-import { Popover, Text } from "@/components";
 import { EllipsisVertical } from "lucide-react";
 import { useTheme } from "styled-components";
+import { Popover, Text } from "@/components";
 
 const Menu = () => {
   const theme = useTheme();

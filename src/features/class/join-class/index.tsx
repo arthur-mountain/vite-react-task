@@ -5,6 +5,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { Button, type ButtonProps, Text } from "@/components";
 import { writeTextToClipboard } from "@/utils";
 import { useSelector } from "@/stores";
+
 type JoinClassProps = {
   title: string;
   back: ButtonProps["onClick"];

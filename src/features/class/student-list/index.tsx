@@ -1,10 +1,10 @@
 import { Text, Button, type ButtonProps, Tabs } from "@/components";
 import { styled, useTheme } from "styled-components";
 import { User } from "lucide-react";
+import { useSelector } from "@/stores";
 import { Menu } from "./menu";
 import { Students } from "./students";
 import { StudentGroup } from "./student-group";
-import { useSelector } from "@/stores";
 
 type StudentListProps = {
   title: string;
@@ -66,4 +66,5 @@ const StudentList = ({ title, joinClass }: StudentListProps) => {
   );
 };
 
-export { StudentList, type StudentListProps };
+export type { StudentListProps };
+export { StudentList };

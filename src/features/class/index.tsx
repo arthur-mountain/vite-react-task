@@ -40,4 +40,5 @@ const Class = ({ isOpen, onClose }: ClassProps) => {
   );
 };
 
-export { Class, type ClassProps };
+export type { ClassProps };
+export { Class };
