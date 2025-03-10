@@ -111,6 +111,7 @@ const JoinClass = ({ title }: JoinClassProps) => {
             </QrCodeInfoContainer>
           )}
           {qrcode && <QRCode value={qrcode} size={250} />}
+          {qrcodeVersion && <Text>Version {qrcodeVersion}</Text>}
         </QrCodeContainer>
       </JoinClassContainer>
     </Container>

@@ -35,6 +35,7 @@ const generateMockClass = (classId: string) => {
       class: "302",
       course: "Science",
       qrcode: "https://www.classswift.viewsonic.io",
+      qrcodeVersion: "1.1.7",
       studentCount: mockStudents.length - isGuestCount,
       totalStudentCount: mockStudents.length,
     },

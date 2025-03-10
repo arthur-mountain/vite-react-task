@@ -5,6 +5,7 @@ export type ClassResponseType = {
     class: string;
     course: "Science" | null;
     qrcode: string;
+    qrcodeVersion: string;
     studentCount: number;
     totalStudentCount: number;
   };
