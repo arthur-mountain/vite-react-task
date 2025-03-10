@@ -1,8 +1,9 @@
 import type { ClassesType } from "@/services";
-import { useState } from "react";
 import styled from "styled-components";
-import { Button, Text } from "@/components";
+import { useDispatch, useSelector } from "@/stores";
 import { pxToRem } from "@/utils";
+import { Button, type ButtonProps, Text } from "@/components";
+import { updateStudentScore } from "../reducer/slice";
 
 const StudentContainer = styled.li<{
   $isGuest: ClassesType.StudentType["isGuest"];
@@ -66,14 +67,15 @@ const Count = styled(Text)<{ $isGuest: ClassesType.StudentType["isGuest"] }>`
 
 const Student = ({ student }: { student: ClassesType.StudentType }) => {
   const { id, name, isGuest } = student;
-  const [count, setCount] = useState(0);
+  const dispatch = useDispatch();
+  const score = useSelector((state) => state.class.studentScore[id] ?? 0);
 
-  const handleIncrement = () => {
-    setCount((prevCount) => prevCount + 1);
-  };
-
-  const handleDecrement = () => {
-    setCount((prevCount) => prevCount - 1);
+  const updateScore: (
+    type: Parameters<typeof updateStudentScore>[0]["type"],
+  ) => ButtonProps["onClick"] = (type) => (evt) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+    dispatch(updateStudentScore({ type, studentId: id }));
   };
 
   return (
@@ -84,15 +86,15 @@ const Student = ({ student }: { student: ClassesType.StudentType }) => {
         <CountButton
           $actionType="decrement"
           disabled={isGuest}
-          onClick={handleDecrement}
+          onClick={updateScore("decrement")}
         >
           -1
         </CountButton>
-        <Count $isGuest={isGuest}>{count}</Count>
+        <Count $isGuest={isGuest}>{score}</Count>
         <CountButton
           $actionType="increment"
           disabled={isGuest}
-          onClick={handleIncrement}
+          onClick={updateScore("increment")}
         >
           +1
         </CountButton>

@@ -5,6 +5,7 @@ type ClassState = {
   status: ApiStatusType;
   classInfo: ClassesType.ClassResponseType["classInfo"];
   students: ClassesType.ClassResponseType["students"];
+  studentScore: { [studentId: string]: number };
 };
 
 const initialClassState: ClassState = {
@@ -18,6 +19,7 @@ const initialClassState: ClassState = {
     totalStudentCount: 0,
   },
   students: [],
+  studentScore: {},
 };
 
 const classSlice = createSlice({
@@ -36,8 +38,23 @@ const classSlice = createSlice({
         state.status = "failed";
       }
     },
+    updateStudentScore: (
+      state,
+      action: PayloadAction<{
+        type: "increment" | "decrement";
+        studentId: string;
+      }>,
+    ) => {
+      console.log("update");
+      const v = action.payload.type === "increment" ? 1 : -1;
+      if (state.studentScore[action.payload.studentId]) {
+        state.studentScore[action.payload.studentId] += v;
+      } else {
+        state.studentScore[action.payload.studentId] = v;
+      }
+    },
   },
 });
 
-export const { initClass } = classSlice.actions;
+export const { initClass, updateStudentScore } = classSlice.actions;
 export { classSlice };
