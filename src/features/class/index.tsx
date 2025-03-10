@@ -1,8 +1,8 @@
+import styled from "styled-components";
 import { Modal } from "@/components";
 import { StudentList } from "./student-list";
 import { JoinClass } from "./join-class";
 import { useInit } from "./use-init";
-import styled from "styled-components";
 
 const ClassContentContainer = styled.div`
   display: flex;
