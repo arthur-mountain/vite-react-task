@@ -1,8 +1,10 @@
 import { fetcher } from "@/utils";
-import { mockData } from "./mock-data";
+import { generateMockClass } from "./mock-data";
 
 const getClass = (classId: string) => {
-  return fetcher(`api/v1/classes/${classId}`, { mockData });
+  return fetcher(`api/v1/classes/${classId}`, {
+    mockData: generateMockClass(classId),
+  });
 };
 
 export { getClass };

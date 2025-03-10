@@ -12,7 +12,7 @@ const useInit = () => {
   useEffect(() => {
     (async () => {
       try {
-        const data = await ClassesServices.getClass("");
+        const data = await ClassesServices.getClass("X58E9647");
         dispatch(initClass(data));
       } catch {
         dispatch(initClass());
