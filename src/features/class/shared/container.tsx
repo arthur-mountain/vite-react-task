@@ -2,7 +2,7 @@ import { useState, type PropsWithChildren } from "react";
 import { styled } from "styled-components";
 import { CloseButton } from "@/components";
 
-const _Container = styled.div<{ $width?: string | number }>`
+const _Container = styled.div`
   background: ${({ theme }) => theme.color.background};
   border-radius: ${({ theme }) => theme.borderRadius.md};
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);

@@ -2,7 +2,7 @@ import type { MouseEventHandler } from "react";
 import { styled, useTheme } from "styled-components";
 import { ChevronLeft, Files } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
-import { Button, ButtonProps, Text } from "@/components";
+import { Button, type ButtonProps, Text } from "@/components";
 import { writeTextToClipboard } from "@/utils";
 import { useSelector } from "@/stores";
 import { Container } from "../shared";
