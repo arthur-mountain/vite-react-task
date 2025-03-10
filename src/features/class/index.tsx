@@ -1,44 +1,37 @@
-import { Modal, type ModalProps, type ButtonProps } from "@/components";
-import { useState } from "react";
+import { Modal } from "@/components";
 import { StudentList } from "./student-list";
 import { JoinClass } from "./join-class";
 import { useInit } from "./use-init";
+import styled from "styled-components";
 
-type ModalType = "studentList" | "join";
+const ClassContentContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: ${({ theme }) => theme.spacing.base};
 
-type ClassProps = Pick<ModalProps, "isOpen" | "onClose">;
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    flex-wrap: wrap;
+  }
+`;
 
-const Class = ({ isOpen, onClose }: ClassProps) => {
-  const [modalType, setModalType] = useState<ModalType>("studentList");
+const Class = () => {
   const classTitle = useInit();
-
-  const changeModalType: (type: ModalType) => ButtonProps["onClick"] =
-    (type) => (evt) => {
-      evt.preventDefault();
-      evt.stopPropagation();
-      setModalType(type);
-    };
-
-  const _onClose = () => {
-    setModalType("studentList");
-    onClose();
-  };
 
   return (
     <Modal
-      isOpen={isOpen}
-      onClose={_onClose}
-      maxWidth={modalType === "join" ? 450 : undefined}
+      isOpen
+      maxWidth="90vw"
+      hideCloseButton
       unmountOnClose
+      disableCloseOnOverlayClick
     >
-      {modalType === "studentList" ? (
-        <StudentList title={classTitle} joinClass={changeModalType("join")} />
-      ) : (
-        <JoinClass title={classTitle} back={changeModalType("studentList")} />
-      )}
+      <ClassContentContainer>
+        <JoinClass title={classTitle} />
+        <StudentList title={classTitle} />
+      </ClassContentContainer>
     </Modal>
   );
 };
 
-export type { ClassProps };
 export { Class };

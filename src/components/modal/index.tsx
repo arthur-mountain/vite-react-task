@@ -5,7 +5,7 @@ import { CloseButton } from "../button";
 
 type ModalProps = PropsWithChildren<{
   isOpen: boolean;
-  onClose: () => void;
+  onClose?: () => void;
   disableCloseOnOverlayClick?: boolean;
   hideOverlay?: boolean;
   maxWidth?: string | number;
@@ -53,7 +53,11 @@ const Modal = ({
   const onOverlayClick: MouseEventHandler<HTMLDivElement> = (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
-    if (evt.target === overlayRef.current && !disableCloseOnOverlayClick) {
+    if (
+      onClose &&
+      !disableCloseOnOverlayClick &&
+      evt.target === overlayRef.current
+    ) {
       onClose();
     }
   };

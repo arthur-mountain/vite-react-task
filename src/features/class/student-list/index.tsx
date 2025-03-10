@@ -1,14 +1,14 @@
-import { Text, Button, type ButtonProps, Tabs } from "@/components";
 import { styled, useTheme } from "styled-components";
 import { User } from "lucide-react";
 import { useSelector } from "@/stores";
+import { Text, Tabs } from "@/components";
+import { Container } from "../shared";
 import { Menu } from "./menu";
 import { Students } from "./students";
 import { StudentGroup } from "./student-group";
 
 type StudentListProps = {
   title: string;
-  joinClass: ButtonProps["onClick"];
 };
 
 const TitleContainer = styled.div`
@@ -26,7 +26,7 @@ const StudensContainer = styled.div`
   gap: ${({ theme }) => theme.gap.sm};
 `;
 
-const StudentList = ({ title, joinClass }: StudentListProps) => {
+const StudentList = ({ title }: StudentListProps) => {
   const theme = useTheme();
   const { id, studentCount, totalStudentCount } = useSelector(
     (state) => ({
@@ -38,7 +38,7 @@ const StudentList = ({ title, joinClass }: StudentListProps) => {
   );
 
   return (
-    <>
+    <Container>
       <TitleContainer>
         <Text $weight="extrabold">{title}</Text>
         <StudensContainer>
@@ -47,9 +47,6 @@ const StudentList = ({ title, joinClass }: StudentListProps) => {
             {studentCount} / {totalStudentCount}
           </Text>
         </StudensContainer>
-        <Button $variant="secondary" onClick={joinClass}>
-          Join Class
-        </Button>
       </TitleContainer>
       <Tabs
         tabs={[
@@ -62,7 +59,7 @@ const StudentList = ({ title, joinClass }: StudentListProps) => {
         ]}
         rightComponents={[<Menu key={`${id}-menu`} />]}
       />
-    </>
+    </Container>
   );
 };
 

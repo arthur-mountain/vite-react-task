@@ -64,6 +64,14 @@ const theme = {
     "2xl": pxToRem(24),
     "3xl": pxToRem(32),
   },
+  breakpoints: {
+    mobileSmall: "320px", // 小型手機(iPhone SE, 小尺寸裝置)
+    mobile: "480px", // 一般手機裝置
+    tablet: "768px", // 平板裝置
+    laptop: "1024px", // 筆電及小型桌面裝置
+    desktop: "1280px", // 一般桌面裝置
+    desktopLarge: "1536px", // 大型桌面及寬螢幕
+  },
 };
 
 type DefaultTheme = typeof theme;

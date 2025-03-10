@@ -37,27 +37,25 @@ const Button = styled.button<ButtonProps>`
   padding: ${getButtonPadding};
   font-size: ${({ theme }) => theme.fontSize.base};
   cursor: pointer;
-
-  ${({ theme, $variant }) =>
-    $variant === "text"
-      ? `
-  padding-left: 0;
-  padding-right: 0;
   &:disabled {
-    color: ${theme.color.neutral};
-    cursor: not-allowed;
-  }
-`
-      : `
-  &:disabled {
-    background-color: ${theme.color.neutral};
+    background-color: ${({ theme }) => theme.color.neutral};
     cursor: not-allowed;
   }
 
   &:hover:not(:disabled) {
-    opacity: 0.9;
+    opacity: 0.7;
   }
-`};
+
+  ${({ $variant }) =>
+    $variant === "text" &&
+    `
+        padding-left: 0;
+        padding-right: 0;
+        &:hover, &:focus, &:active, &:focus-visible {
+          border: none;
+          outline: none;
+        }
+      `};
 `;
 
 export type { ButtonProps };

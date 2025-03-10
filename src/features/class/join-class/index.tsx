@@ -2,13 +2,13 @@ import type { MouseEventHandler } from "react";
 import { styled, useTheme } from "styled-components";
 import { ChevronLeft, Files } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
-import { Button, type ButtonProps, Text } from "@/components";
+import { Button, ButtonProps, Text } from "@/components";
 import { writeTextToClipboard } from "@/utils";
 import { useSelector } from "@/stores";
+import { Container } from "../shared";
 
 type JoinClassProps = {
   title: string;
-  back: ButtonProps["onClick"];
 };
 
 const JoinClassContainer = styled.div`
@@ -50,10 +50,10 @@ const QRCode = styled(QRCodeSVG)`
   border-radius: ${({ theme }) => theme.borderRadius.md};
 `;
 
-const JoinClass = ({ title, back }: JoinClassProps) => {
+const JoinClass = ({ title }: JoinClassProps) => {
   const theme = useTheme();
   const classInfo = useSelector((state) => state.class.classInfo);
-  const { id, qrcode } = classInfo;
+  const { id, qrcode, qrcodeVersion } = classInfo;
 
   const onCopy: (text: string) => MouseEventHandler<SVGSVGElement> =
     (text) => (evt) => {
@@ -62,47 +62,58 @@ const JoinClass = ({ title, back }: JoinClassProps) => {
       writeTextToClipboard(text);
     };
 
-  return (
-    <JoinClassContainer>
-      <Button $variant="text" onClick={back}>
-        <ChevronLeft size={16} />
-        {/* TODO: [Confirm] {wording}:
-          Should be "Back to Student List" when already in a specific class (e.g., 302 Science)?
-        */}
-        Back to Class List
-      </Button>
+  const onBack: ButtonProps["onClick"] = (evt) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+    {
+      /* TODO: [Confirm] {feature}:
+      If the QR Code modal and the Student List are displayed simultaneously,
+      the behavior of this button when clicked is unclear.
+    */
+    }
+    console.log("Back to Class List");
+  };
 
-      <QrCodeContainer>
-        <Text $weight="extrabold" $align="left">
-          Join {title}
-        </Text>
-        {(id || qrcode) && (
-          <QrCodeInfoContainer>
-            {id && (
-              <QrCodeInfText $weight="bold">
-                ID: {id}
-                <CopyIcon
-                  size={20}
-                  color={theme.color.white}
-                  onClick={onCopy(id)}
-                />
-              </QrCodeInfText>
-            )}
-            {qrcode && (
-              <QrCodeInfText $weight="bold">
-                Link
-                <CopyIcon
-                  size={20}
-                  color={theme.color.white}
-                  onClick={onCopy(qrcode)}
-                />
-              </QrCodeInfText>
-            )}
-          </QrCodeInfoContainer>
-        )}
-        {qrcode && <QRCode value={qrcode} size={325} />}
-      </QrCodeContainer>
-    </JoinClassContainer>
+  return (
+    <Container>
+      <JoinClassContainer>
+        <Button $variant="text" onClick={onBack}>
+          <ChevronLeft size={16} />
+          Back to Class List
+        </Button>
+
+        <QrCodeContainer>
+          <Text $weight="extrabold" $align="left">
+            Join {title}
+          </Text>
+          {(id || qrcode) && (
+            <QrCodeInfoContainer>
+              {id && (
+                <QrCodeInfText $weight="bold">
+                  ID: {id}
+                  <CopyIcon
+                    size={20}
+                    color={theme.color.white}
+                    onClick={onCopy(id)}
+                  />
+                </QrCodeInfText>
+              )}
+              {qrcode && (
+                <QrCodeInfText $weight="bold">
+                  Link
+                  <CopyIcon
+                    size={20}
+                    color={theme.color.white}
+                    onClick={onCopy(qrcode)}
+                  />
+                </QrCodeInfText>
+              )}
+            </QrCodeInfoContainer>
+          )}
+          {qrcode && <QRCode value={qrcode} size={250} />}
+        </QrCodeContainer>
+      </JoinClassContainer>
+    </Container>
   );
 };
 
